@@ -7,10 +7,9 @@ volumes:
   azuriom_vhost:
 services:
   azuriom:
-    image: azuriom:1.0
-    build: .
+    image: ghcr.io/idotek/azuriom-image:main
     ports: 
-      - 80:80
+      - 8080:80
     environment:
       DB_HOST: database
       DB_DATABASE: azuriom

@@ -26,7 +26,6 @@ git clone https://github.com/votre-utilisateur/azuriom-docker-stack.git
 cd azuriom-docker-stack.
 ```
 
-L'image est aussi disponible sur le [Hub docker](https://hub.docker.com/r/idotek/azuriom-image)
 
 ### 2. Configurez les variables d'environnement
 
@@ -93,7 +92,7 @@ Variables d'environnement supportées:
 ### 3. Construisez et démarrez les conteneurs
 
 ```bash
-docker-compose up --build
+docker-compose up -d
 ```
 
 Le service Azuriom sera accessible sur `http://localhost:80`, sauf configuration personnalisée.
