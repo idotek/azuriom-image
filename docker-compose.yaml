@@ -21,8 +21,8 @@ services:
       TLS_ENABLED: "False"
       TLS_CERTIFICATE_FULLCHAIN_NAME: "fullchain.pem"
       TLS_CERTIFIATE_PRIVKEY_NAME: "privkey.key"
-      ADMIN_USERNAME: "matheo"
-      ADMIN_EMAIL: "idotek@idotek.fr" ## Password would be print in logs, please check `docker compose logs`
+      ADMIN_USERNAME: "username"
+      ADMIN_EMAIL: "your@email.fr" ## Password would be print in logs, please check `docker compose logs`
     volumes:
       - azuriom_data:/data
       - azuriom_vhost:/etc/nginx/sites-enabled
