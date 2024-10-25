@@ -1,0 +1,40 @@
+networks:
+  azuriom:
+    driver: bridge
+volumes:
+  database:
+  azuriom_data:
+  azuriom_vhost:
+services:
+  azuriom:
+    image: azuriom:1.0
+    build: .
+    ports: 
+      - 80:80
+    environment:
+      DB_HOST: database
+      DB_DATABASE: azuriom
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      MAIL_FROM_ADDRESS: hello@example.com
+      WEB_DOMAIN: your-domain.local
+      TLS_ENABLED: "False"
+      TLS_CERTIFICATE_FULLCHAIN_NAME: "fullchain.pem"
+      TLS_CERTIFIATE_PRIVKEY_NAME: "privkey.key"
+      ADMIN_USERNAME: "matheo"
+      ADMIN_EMAIL: "idotek@idotek.fr" ## Password would be print in logs, please check `docker compose logs`
+    volumes:
+      - azuriom_data:/data
+      - azuriom_vhost:/etc/nginx/sites-enabled
+    networks:
+      - azuriom
+
+  database:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: azuriom
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - azuriom
