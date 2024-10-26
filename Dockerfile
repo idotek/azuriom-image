@@ -42,7 +42,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - 
 RUN apt install nodejs -y
 WORKDIR /data/www
-#RUN curl -L https://github.com/Azuriom/AzuriomInstaller/releases/latest/download/AzuriomInstaller.zip -o /tmp/AzuriomInstaller.zip
 COPY ./docker/.env.temp /tmp
 RUN mkdir /etc/nginx/ssl
 # RUN unzip /tmp/AzuriomInstaller -d /data/www
