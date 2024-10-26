@@ -1,0 +1,188 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "azuriom-charts.fullname" . }}
+  labels:
+    {{- include "azuriom-charts.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "azuriom-charts.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "azuriom-charts.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "azuriom-charts.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          env:
+            - name: APP_NAME
+              value: {{ .Values.APP_NAME | quote }}
+            - name: APP_ENV
+              value: {{ .Values.APP_ENV | quote }}
+            - name: APP_KEY
+              value: {{ .Values.APP_KEY | quote }}
+            - name: APP_DEBUG
+              value: {{ .Values.APP_DEBUG | quote }}
+            - name: APP_TIMEZONE
+              value: {{ .Values.APP_TIMEZONE | quote }}
+            - name: APP_URL
+              value: {{ .Values.APP_URL | quote }}
+
+            - name: APP_LOCALE
+              value: {{ .Values.APP_LOCALE | quote }}
+
+            - name: APP_MAINTENANCE_DRIVER
+              value: {{ .Values.APP_MAINTENANCE_DRIVER | quote }}
+            # - name: APP_MAINTENANCE_STORE
+            #   value: {{ .Values.APP_MAINTENANCE_STORE | quote }}
+
+            - name: AZURIOM_GAME
+              value: {{ .Values.AZURIOM_GAME | quote }}
+
+            - name: BCRYPT_ROUNDS
+              value: {{ .Values.BCRYPT_ROUNDS | quote }}
+
+            - name: LOG_CHANNEL
+              value: {{ .Values.LOG_CHANNEL | quote }}
+            - name: LOG_STACK
+              value: {{ .Values.LOG_STACK | quote }}
+            - name: LOG_DEPRECATIONS_CHANNEL
+              value: {{ .Values.LOG_DEPRECATIONS_CHANNEL | quote }}
+            - name: LOG_LEVEL
+              value: {{ .Values.LOG_LEVEL | quote }}
+
+            - name: DB_CONNECTION
+              value: {{ .Values.DB_CONNECTION | quote }}
+            - name: DB_HOST
+              value: {{ .Values.DB_HOST | quote }}
+            - name: DB_PORT
+              value: {{ .Values.DB_PORT | quote }}
+            - name: DB_DATABASE
+              value: {{ .Values.DB_DATABASE | quote }}
+            - name: DB_USERNAME
+              value: {{ .Values.DB_USERNAME | quote }}
+            - name: DB_PASSWORD
+              value: {{ .Values.DB_PASSWORD | quote }}
+
+            - name: SESSION_DRIVER
+              value: {{ .Values.SESSION_DRIVER | quote }}
+            - name: SESSION_LIFETIME
+              value: {{ .Values.SESSION_LIFETIME | quote }}
+            - name: SESSION_ENCRYPT
+              value: {{ .Values.SESSION_ENCRYPT | quote }}
+            - name: SESSION_PATH
+              value: {{ .Values.SESSION_PATH | quote }}
+            - name: SESSION_DOMAIN
+              value: {{ .Values.SESSION_DOMAIN | quote }}
+
+            - name: BROADCAST_CONNECTION
+              value: {{ .Values.BROADCAST_CONNECTION | quote }}
+            - name: FILESYSTEM_DISK
+              value: {{ .Values.FILESYSTEM_DISK | quote }}
+            - name: QUEUE_CONNECTION
+              value: {{ .Values.QUEUE_CONNECTION | quote }}
+
+            - name: CACHE_DRIVER
+              value: {{ .Values.CACHE_DRIVER | quote }}
+            - name: CACHE_PREFIX
+              value: {{ .Values.CACHE_PREFIX | quote }}
+
+            - name: MEMCACHED_HOST
+              value: {{ .Values.MEMCACHED_HOST | quote }}
+
+            - name: REDIS_CLIENT
+              value: {{ .Values.REDIS_CLIENT | quote }}
+            - name: REDIS_HOST
+              value: {{ .Values.REDIS_HOST | quote }}
+            - name: REDIS_PASSWORD
+              value: {{ .Values.REDIS_PASSWORD | quote }}
+            - name: REDIS_PORT
+              value: {{ .Values.REDIS_PORT | quote }}
+
+            - name: MAIL_MAILER
+              value: {{ .Values.MAIL_MAILER | quote }}
+            - name: MAIL_HOST
+              value: {{ .Values.MAIL_HOST | quote }}
+            - name: MAIL_PORT
+              value: {{ .Values.MAIL_PORT | quote }}
+            - name: MAIL_USERNAME
+              value: {{ .Values.MAIL_USERNAME | quote }}
+            - name: MAIL_PASSWORD
+              value: {{ .Values.MAIL_PASSWORD | quote }}
+            - name: MAIL_ENCRYPTION
+              value: {{ .Values.MAIL_ENCRYPTION | quote }}
+            - name: MAIL_FROM_ADDRESS
+              value: {{ .Values.MAIL_FROM_ADDRESS | quote }}
+            - name: MAIL_FROM_NAME
+              value: {{ .Values.MAIL_FROM_NAME | quote }}
+
+            - name: STEAM_KEY
+              value: {{ .Values.STEAM_KEY | quote }}
+
+            - name: EPIC_CLIENT_ID
+              value: {{ .Values.EPIC_CLIENT_ID | quote }}
+            - name: EPIC_CLIENT_SECRET
+              value: {{ .Values.EPIC_CLIENT_SECRET | quote }}
+
+            - name: AWS_ACCESS_KEY_ID
+              value: {{ .Values.AWS_ACCESS_KEY_ID | quote }}
+            - name: AWS_SECRET_ACCESS_KEY
+              value: {{ .Values.AWS_SECRET_ACCESS_KEY | quote }}
+            - name: AWS_DEFAULT_REGION
+              value: {{ .Values.AWS_DEFAULT_REGION | quote }}
+            - name: AWS_BUCKET
+              value: {{ .Values.AWS_BUCKET | quote }}
+            - name: AWS_USE_PATH_STYLE_ENDPOINT
+              value: {{ .Values.AWS_USE_PATH_STYLE_ENDPOINT | quote }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
