@@ -147,6 +147,15 @@ composer update
 php artisan migrate
 ```
 
+## 📋 Todo List
+
+| Tâche                      | Statut           | Description                                  |
+|----------------------------|------------------|----------------------------------------------|
+| 🔒 Sécurité dans le Docker  | ❌ Non commencé  | Mettre en place des bonnes pratiques de sécurité pour Docker. |
+| 📦 Helm Charts              | ⏳ En cours      | Création et configuration de Helm Charts.    |
+| 📚 Tutoriel                 | ❌ Non commencé  | Écrire un tutoriel détaillé.                  |
+| 💡 Exemple                  | ❌ Non commencé  | Créer un exemple pratique d'utilisation.     |
+
 ## Aide
 
 Pour des questions ou problèmes, consultez la [documentation officielle d'Azuriom](https://azuriom.com/docs) ou créez une issue sur ce dépôt.
