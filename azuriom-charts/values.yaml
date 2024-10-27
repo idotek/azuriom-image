@@ -105,9 +105,11 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes: 
-  - name: azuriom_data
+  - name: azuriom-data
     size: 10g
-  - name: azuriom_vhost
+  - name: azuriom-vhost
+    size: 512m
+  - name: azuriom-ssl
     size: 512m
 
 
@@ -117,13 +119,13 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
-  - name: azuriom_data
+  - name: azuriom-data
     mountPath: "/data"
     readOnly: false
-  - name: azuriom_vhost
+  - name: azuriom-vhost
     mountPath: "/etc/nginx/sites-enabled"
     readOnly: false
-  - name: azuriom_ssl
+  - name: azuriom-ssl
     mountPath: "/etc/nginx/ssl"
     readOnly: false
 

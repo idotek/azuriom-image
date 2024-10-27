@@ -49,6 +49,8 @@ spec:
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
+          {{- end }}
+
           env:
             - name: WEB_DOMAIN
               value: {{ .Values.WEB_DOMAIN | quote }}
@@ -160,7 +162,6 @@ spec:
               value: {{ .Values.AWS_BUCKET | quote }}
             - name: AWS_USE_PATH_STYLE_ENDPOINT
               value: {{ .Values.AWS_USE_PATH_STYLE_ENDPOINT | quote }}
-          {{- end }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
