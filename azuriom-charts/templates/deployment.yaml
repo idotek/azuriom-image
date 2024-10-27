@@ -49,8 +49,13 @@ spec:
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
+            - name: azuriom-data
+              mountPath: "/data"
+            - name: azuriom-vhost
+              mountPath: "/etc/nginx/sites-enabled"
+            - name: azuriom-ssl
+              mountPath: "/etc/nginx/ssl"
           {{- end }}
-
           env:
             - name: WEB_DOMAIN
               value: {{ .Values.WEB_DOMAIN | quote }}
@@ -165,6 +170,11 @@ spec:
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
+        - name: azuriom-data
+          emptyDir: {}
+        - name: azuriom-vhost
+          emptyDir: {}
+        - name: azuriom-ssl
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
