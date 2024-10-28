@@ -32,60 +32,65 @@ cd azuriom-docker-stack.
 Modifier les variables d'environnement dans le fichier docker-compose à votre guise.
 Variables d'environnement supportées:
 
-| Variable                  | Description                                                                 |
-|---------------------------|-----------------------------------------------------------------------------|
-| `APP_NAME`                | Nom de l'application.                                                      |
-| `APP_ENV`                 | Environnement de l'application (ex: `local`, `production`).               |
-| `APP_KEY`                 | Clé de l'application, utilisée pour le chiffrement.                        |
-| `APP_DEBUG`               | Mode debug (`true` ou `false`).                                            |
-| `APP_TIMEZONE`            | Fuseau horaire de l'application.                                           |
-| `APP_URL`                 | URL de base de l'application.                                              |
-| `APP_LOCALE`              | Langue par défaut de l'application.                                        |
-| `APP_MAINTENANCE_DRIVER`  | Driver pour le mode maintenance.                                           |
-| `AZURIOM_GAME`            | Type de jeu configuré pour Azuriom.                                        |
-| `BCRYPT_ROUNDS`           | Nombre de rounds pour l'algorithme de hashage Bcrypt.                      |
-| `LOG_CHANNEL`             | Canal pour la journalisation des logs.                                     |
-| `LOG_STACK`               | Indicateur de pile pour les logs.                                          |
-| `LOG_DEPRECATIONS_CHANNEL`| Canal pour les dépréciations.                                              |
-| `LOG_LEVEL`               | Niveau de log (`debug`, `info`, `warning`, etc.).                          |
-| `DB_CONNECTION`           | Type de connexion à la base de données (ex: `mysql`, `pgsql`).             |
-| `DB_HOST`                 | Adresse de l'hôte de la base de données.                                   |
-| `DB_PORT`                 | Port de la base de données.                                                |
-| `DB_DATABASE`             | Nom de la base de données.                                                 |
-| `DB_USERNAME`             | Nom d'utilisateur de la base de données.                                  |
-| `DB_PASSWORD`             | Mot de passe de la base de données.                                        |
-| `SESSION_DRIVER`          | Driver de session (ex: `file`, `cookie`, `database`).                     |
-| `SESSION_LIFETIME`        | Durée de vie de la session en minutes.                                     |
-| `SESSION_ENCRYPT`         | Active ou désactive le chiffrement des sessions (`true` ou `false`).       |
-| `SESSION_PATH`            | Chemin pour les sessions.                                                  |
-| `SESSION_DOMAIN`          | Domaine des sessions.                                                      |
-| `BROADCAST_CONNECTION`    | Connexion de diffusion (`null` ou `redis`).                                |
-| `FILESYSTEM_DISK`         | Driver de stockage par défaut (`local`, `s3`, etc.).                      |
-| `QUEUE_CONNECTION`        | Connexion pour la file d'attente (`sync`, `database`, etc.).               |
-| `CACHE_DRIVER`            | Driver de cache (`file`, `redis`, etc.).                                  |
-| `CACHE_PREFIX`            | Préfixe pour le cache.                                                     |
-| `MEMCACHED_HOST`          | Hôte pour le cache Memcached.                                              |
-| `REDIS_CLIENT`            | Type de client Redis (`predis`, `phpredis`).                              |
-| `REDIS_HOST`              | Adresse de l'hôte Redis.                                                   |
-| `REDIS_PASSWORD`          | Mot de passe pour Redis.                                                   |
-| `REDIS_PORT`              | Port de Redis.                                                             |
-| `MAIL_MAILER`             | Service d'envoi d'email (`smtp`, `sendmail`).                             |
-| `MAIL_HOST`               | Hôte SMTP pour les emails.                                                |
-| `MAIL_PORT`               | Port SMTP.                                                                 |
-| `MAIL_USERNAME`           | Nom d'utilisateur pour le serveur SMTP.                                   |
-| `MAIL_PASSWORD`           | Mot de passe SMTP.                                                         |
-| `MAIL_ENCRYPTION`         | Type de chiffrement pour les emails (`tls`, `ssl`).                       |
-| `MAIL_FROM_ADDRESS`       | Adresse email de l'expéditeur par défaut.                                  |
-| `MAIL_FROM_NAME`          | Nom de l'expéditeur par défaut.                                            |
-| `STEAM_KEY`               | Clé API pour l'intégration Steam.                                          |
-| `EPIC_CLIENT_ID`          | ID client pour l'API Epic Games.                                           |
-| `EPIC_CLIENT_SECRET`      | Secret client pour l'API Epic Games.                                       |
-| `AWS_ACCESS_KEY_ID`       | Clé d'accès AWS.                                                           |
-| `AWS_SECRET_ACCESS_KEY`   | Clé secrète AWS.                                                           |
-| `AWS_DEFAULT_REGION`      | Région par défaut pour les services AWS.                                   |
-| `AWS_BUCKET`              | Nom du bucket AWS S3.                                                     |
-| `AWS_USE_PATH_STYLE_ENDPOINT` | Définit l'utilisation d'un endpoint de style chemin pour AWS (`true` ou `false`). |
-
+| Variable                        | Description                                                                                         | Optionnel   |
+|---------------------------------|-----------------------------------------------------------------------------------------------------|-------------|
+| `WEB_DOMAIN`                    | URL de votre site internet                                                                          | Non         |
+| `TLS_ENABLED`                   | Activez ou non le support TLS                                                                       | Oui         |
+| `TLS_CERTIFICATE_FULLCHAIN_NAME`| Nom du fichier de votre certificat fullchain                                                        | Oui         |
+| `TLS_CERTIFICATE_PRIVKEY_NAME`  | Nom du fichier de votre private key                                                                 | Oui         |
+| `ADMIN_USERNAME`                | Nom d'utilisateur du compte admin                                                                   | Non         |
+| `ADMIN_EMAIL`                   | Adresse email du compte admin                                                                       | Non         |
+| `APP_NAME`                      | Nom de l'application                                                                               | Non         |
+| `APP_ENV`                       | Environnement de l'application (ex: `local`, `production`)                                         | Non         |
+| `APP_KEY`                       | Clé de l'application, utilisée pour le chiffrement                                                  | Automatique |
+| `APP_DEBUG`                     | Mode debug (`true` ou `false`)                                                                      | Oui         |
+| `APP_TIMEZONE`                  | Fuseau horaire de l'application                                                                    | Oui         |
+| `APP_URL`                       | URL de base de l'application                                                                       | Oui         |
+| `APP_LOCALE`                    | Langue par défaut de l'application                                                                 | Oui         |
+| `APP_MAINTENANCE_DRIVER`        | Driver pour le mode maintenance                                                                    | Oui         |
+| `AZURIOM_GAME`                  | Type de jeu configuré pour Azuriom                                                                 | Oui         |
+| `BCRYPT_ROUNDS`                 | Nombre de rounds pour l'algorithme de hashage Bcrypt                                               | Oui         |
+| `LOG_CHANNEL`                   | Canal pour la journalisation des logs                                                              | Oui         |
+| `LOG_STACK`                     | Indicateur de pile pour les logs                                                                   | Oui         |
+| `LOG_DEPRECATIONS_CHANNEL`      | Canal pour les dépréciations                                                                       | Oui         |
+| `LOG_LEVEL`                     | Niveau de log (`debug`, `info`, `warning`, etc.)                                                   | Oui         |
+| `DB_CONNECTION`                 | Type de connexion à la base de données (ex: `mysql`, `pgsql`)                                      | Non         |
+| `DB_HOST`                       | Adresse de l'hôte de la base de données                                                            | Non         |
+| `DB_PORT`                       | Port de la base de données                                                                         | Oui         |
+| `DB_DATABASE`                   | Nom de la base de données                                                                          | Non         |
+| `DB_USERNAME`                   | Nom d'utilisateur de la base de données                                                           | Non         |
+| `DB_PASSWORD`                   | Mot de passe de la base de données                                                                 | Non         |
+| `SESSION_DRIVER`                | Driver de session (ex: `file`, `cookie`, `database`)                                               | Oui         |
+| `SESSION_LIFETIME`              | Durée de vie de la session en minutes                                                              | Oui         |
+| `SESSION_ENCRYPT`               | Active ou désactive le chiffrement des sessions (`true` ou `false`)                                | Oui         |
+| `SESSION_PATH`                  | Chemin pour les sessions                                                                          | Oui         |
+| `SESSION_DOMAIN`                | Domaine des sessions                                                                              | Oui         |
+| `BROADCAST_CONNECTION`          | Connexion de diffusion (`null` ou `redis`)                                                        | Oui         |
+| `FILESYSTEM_DISK`               | Driver de stockage par défaut (`local`, `s3`, etc.)                                               | Oui         |
+| `QUEUE_CONNECTION`              | Connexion pour la file d'attente (`sync`, `database`, etc.)                                       | Oui         |
+| `CACHE_DRIVER`                  | Driver de cache (`file`, `redis`, etc.)                                                           | Oui         |
+| `CACHE_PREFIX`                  | Préfixe pour le cache                                                                             | Oui         |
+| `MEMCACHED_HOST`                | Hôte pour le cache Memcached                                                                      | Oui         |
+| `REDIS_CLIENT`                  | Type de client Redis (`predis`, `phpredis`)                                                       | Oui         |
+| `REDIS_HOST`                    | Adresse de l'hôte Redis                                                                           | Oui         |
+| `REDIS_PASSWORD`                | Mot de passe pour Redis                                                                           | Oui         |
+| `REDIS_PORT`                    | Port de Redis                                                                                     | Oui         |
+| `MAIL_MAILER`                   | Service d'envoi d'email (`smtp`, `sendmail`)                                                      | Oui         |
+| `MAIL_HOST`                     | Hôte SMTP pour les emails                                                                        | Oui         |
+| `MAIL_PORT`                     | Port SMTP                                                                                        | Oui         |
+| `MAIL_USERNAME`                 | Nom d'utilisateur pour le serveur SMTP                                                           | Oui         |
+| `MAIL_PASSWORD`                 | Mot de passe SMTP                                                                                | Oui         |
+| `MAIL_ENCRYPTION`               | Type de chiffrement pour les emails (`tls`, `ssl`)                                               | Oui         |
+| `MAIL_FROM_ADDRESS`             | Adresse email de l'expéditeur par défaut                                                          | Oui         |
+| `MAIL_FROM_NAME`                | Nom de l'expéditeur par défaut                                                                    | Oui         |
+| `STEAM_KEY`                     | Clé API pour l'intégration Steam                                                                  | Oui         |
+| `EPIC_CLIENT_ID`                | ID client pour l'API Epic Games                                                                   | Oui         |
+| `EPIC_CLIENT_SECRET`            | Secret client pour l'API Epic Games                                                               | Oui         |
+| `AWS_ACCESS_KEY_ID`             | Clé d'accès AWS                                                                                   | Oui         |
+| `AWS_SECRET_ACCESS_KEY`         | Clé secrète AWS                                                                                   | Oui         |
+| `AWS_DEFAULT_REGION`            | Région par défaut pour les services AWS                                                           | Oui         |
+| `AWS_BUCKET`                    | Nom du bucket AWS S3                                                                             | Oui         |
+| `AWS_USE_PATH_STYLE_ENDPOINT`   | Définit l'utilisation d'un endpoint de style chemin pour AWS (`true` ou `false`)                 | Oui         |
 
 
 
@@ -98,6 +103,20 @@ docker-compose up -d
 Le service Azuriom sera accessible sur `http://localhost:80`, sauf configuration personnalisée.
 
 ## Structure des fichiers
+
+### 4. Récuperation du mot de passe admin
+
+Azuriom à besoin de quelques minutes avant d'etre ready, vous pouvez suivre l'evolution de l'installation avec la commande:
+
+```bash
+docker compose logs -f 
+```
+
+Pour recuperer le mot de passe admin:
+
+```bash
+docker compose logs |grep "Password:"
+```
 
 - `Dockerfile` : Installe PHP 8.3, Nginx, et les extensions PHP nécessaires pour Azuriom, ainsi que Composer et Node.js pour la gestion des dépendances.
 - `docker-compose.yml` : Contient la configuration Docker Compose pour Azuriom et MySQL.
