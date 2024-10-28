@@ -5,6 +5,7 @@ volumes:
   database:
   azuriom_data:
   azuriom_vhost:
+  azuriom_ssl:
 services:
   azuriom:
     image: ghcr.io/idotek/azuriom-image:main
@@ -25,6 +26,7 @@ services:
     volumes:
       - azuriom_data:/data
       - azuriom_vhost:/etc/nginx/sites-enabled
+      - azuriom_ssl:/etc/nginx/ssl
     networks:
       - azuriom
 
