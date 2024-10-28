@@ -102,8 +102,6 @@ docker-compose up -d
 
 Le service Azuriom sera accessible sur `http://localhost:80`, sauf configuration personnalisée.
 
-## Structure des fichiers
-
 ### 4. Récuperation du mot de passe admin
 
 Azuriom à besoin de quelques minutes avant d'etre ready, vous pouvez suivre l'evolution de l'installation avec la commande:
@@ -117,6 +115,10 @@ Pour recuperer le mot de passe admin:
 ```bash
 docker compose logs |grep "Password:"
 ```
+
+## Structure des fichiers
+
+
 
 - `Dockerfile` : Installe PHP 8.3, Nginx, et les extensions PHP nécessaires pour Azuriom, ainsi que Composer et Node.js pour la gestion des dépendances.
 - `docker-compose.yml` : Contient la configuration Docker Compose pour Azuriom et MySQL.
