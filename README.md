@@ -22,8 +22,8 @@ Ce projet permet de déployer le CMS [Azuriom](https://azuriom.com/) en utilisan
 ### 1. Clonez le dépôt
 
 ```bash
-git clone https://github.com/votre-utilisateur/azuriom-docker-stack.git
-cd azuriom-docker-stack.
+git clone https://github.com/idotek/azuriom-image.git
+cd azuriom-image
 ```
 
 
