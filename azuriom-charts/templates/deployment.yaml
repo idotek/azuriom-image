@@ -171,10 +171,14 @@ spec:
       volumes:
         {{- toYaml . | nindent 8 }}
         - name: azuriom-data
-          emptyDir: {}
+          persistentVolumeClaim: 
+            claimName: pvc-{{ .Release.Name }}-data
         - name: azuriom-vhost
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: pvc-{{ .Release.Name }}-vhost
         - name: azuriom-ssl
+          persistentVolumeClaim:
+            claimName: pvc-{{ .Release.Name }}-ssl
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

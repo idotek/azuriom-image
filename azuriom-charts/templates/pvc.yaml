@@ -1,36 +1,11 @@
-apiVersion: v1
-kind: PervistentVolumeClaim
-metadata: 
-    name: pvc-azuriom-data
-spec:
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-            storage: 10Gi
+{{- if .Values.persistence.enabled -}}
+{{- template "generateVpc" (dict "name" "data" "accessMode" .Values.persistence.azuriom_data.accesModes "size" .Values.persistence.azuriom_data.size "Release" .Release) }}
+
+---
+{{- template "generateVpc" (dict "name" "vhost" "accessMode" .Values.persistence.azuriom_vhost.accessModes "size" .Values.persistence.azuriom_vhost.size "Release" .Release) }}
 
 ---
 
-apiVersion: v1
-kind: PervistentVolumeClaim
-metadata: 
-    name: pvc-azuriom-vhost
-spec:
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-            storage: 512Mi
+{{- template "generateVpc" (dict "name" "ssl" "accessMode" .Values.persistence.azuriom_ssl.accessModes "size" .Values.persistence.azuriom_ssl.size "Release" .Release) }}
 
----
-
-apiVersion: v1
-kind: PervistentVolumeClaim
-metadata: 
-    name: pvc-azuriom-ssl
-spec:
-    accessModes:
-        - ReadWriteOnce
-    resources:
-        requests:
-            storage: 512Mi
+{{- end -}}
