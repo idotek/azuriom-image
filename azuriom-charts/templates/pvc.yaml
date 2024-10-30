@@ -1,11 +1,7 @@
 {{- if .Values.persistence.enabled -}}
-{{- template "generateVpc" (dict "name" "data" "accessMode" .Values.persistence.azuriom_data.accesModes "size" .Values.persistence.azuriom_data.size "Release" .Release) }}
 
----
-{{- template "generateVpc" (dict "name" "vhost" "accessMode" .Values.persistence.azuriom_vhost.accessModes "size" .Values.persistence.azuriom_vhost.size "Release" .Release) }}
-
----
-
-{{- template "generateVpc" (dict "name" "ssl" "accessMode" .Values.persistence.azuriom_ssl.accessModes "size" .Values.persistence.azuriom_ssl.size "Release" .Release) }}
+{{- template "generatePvc" (dict "name" "data" "accessMode" .Values.persistence.azuriom_data.accesModes "size" .Values.persistence.azuriom_data.size "Release" .Release "storageClassName" .Values.persistence.azuriom_data.storageClass) }}
+{{- template "generatePvc" (dict "name" "vhost" "accessMode" .Values.persistence.azuriom_vhost.accessModes "size" .Values.persistence.azuriom_vhost.size "Release" .Release "storageClassName" .Values.persistence.azuriom_vhost.storageClass) }}
+{{- template "generatePvc" (dict "name" "ssl" "accessMode" .Values.persistence.azuriom_ssl.accessModes "size" .Values.persistence.azuriom_ssl.size "Release" .Release "storageClassName" .Values.persistence.azuriom_ssl.storageClass) }}
 
 {{- end -}}

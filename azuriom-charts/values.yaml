@@ -125,12 +125,15 @@ persistence:
   azuriom_data:
     size: 10Gi
     accesModes: ReadWriteOnce
+    storageClass: null
   azuriom_vhost:
     size: 512Mi
     accessModes: ReadWriteOnce
+    storageClass: null
   azuriom_ssl:
     size: 512Mi
     accessModes: ReadWriteOnce
+    storageClass: null
 
 WEB_DOMAIN: your-domain.local
 TLS_ENABLED: "False"
@@ -166,7 +169,7 @@ BROADCAST_CONNECTION: log
 FILESYSTEM_DISK: local
 QUEUE_CONNECTION: sync
 CACHE_DRIVER: file
-CACHE_PREFIX: 
+CACHE_PREFIX: null
 MEMCACHED_HOST: 127.0.0.1
 REDIS_CLIENT: phpredis
 REDIS_HOST: 127.0.0.1
@@ -180,11 +183,11 @@ MAIL_PASSWORD: null
 MAIL_ENCRYPTION: null
 MAIL_FROM_ADDRESS: "hello@example.com"
 MAIL_FROM_NAME: "${APP_NAME}"
-STEAM_KEY: 
-EPIC_CLIENT_ID: 
-EPIC_CLIENT_SECRET: 
-AWS_ACCESS_KEY_ID: 
-AWS_SECRET_ACCESS_KEY: 
+STEAM_KEY: null
+EPIC_CLIENT_ID: null
+EPIC_CLIENT_SECRET: null
+AWS_ACCESS_KEY_ID: null
+AWS_SECRET_ACCESS_KEY: null
 AWS_DEFAULT_REGION: us-east-1
-AWS_BUCKET: 
+AWS_BUCKET: null
 AWS_USE_PATH_STYLE_ENDPOINT: false

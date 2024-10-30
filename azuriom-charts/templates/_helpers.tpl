@@ -62,15 +62,3 @@ Create the name of the service account to use
 {{- end }}
 
 
-{{- define "generateVpc" -}}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pvc-{{ .Release.Name }}-{{ .name }}
-spec:
-  accessModes:
-    - {{ .accessMode }}
-  resources:
-    requests:
-      storage: {{ .size }}
-{{- end -}}
