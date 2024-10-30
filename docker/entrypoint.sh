@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -e
 
 passwd_gen() {
     password=$(tr -dc 'A-Za-z0-9!?%=' < /dev/urandom | head -c 10)
@@ -59,11 +58,8 @@ run() {
 
     printf "Starting Nginx...\n\n"
 
-    if [[ "$1" == -* ]]; then
-        set -- nginx -g daemon off; "$@"
-    fi
+    nginx -g "daemon off;"
 
-    exec "$@"
 }
 
 if [ ! -f index.php ]; then
@@ -71,4 +67,4 @@ if [ ! -f index.php ]; then
 fi
 
 initialize
-run "$@"
+run
