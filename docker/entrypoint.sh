@@ -60,7 +60,7 @@ run() {
 
     printf "Starting Nginx...\n\n"
 
-    exec '/usr/sbin/nginx -g \"daemon off;\"'
+    exec '/usr/sbin/nginx -g "daemon off;"'
 
     
 
