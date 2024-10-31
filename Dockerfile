@@ -47,7 +47,7 @@ RUN mkdir /etc/nginx/ssl
 # RUN unzip /tmp/AzuriomInstaller -d /data/www
 # RUN chown -R www-data:www-data /data/www
 # RUN chmod -R 755 /data/www
-EXPOSE 80
+EXPOSE 80 443
 RUN apt clean
 CMD ["nginx", "-g", "daemon off;"]
 ENTRYPOINT ["entrypoint.sh"]
