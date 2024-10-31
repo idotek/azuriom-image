@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -o xtrace
+set -e
 
 passwd_gen() {
     password=$(tr -dc 'A-Za-z0-9!?%=' < /dev/urandom | head -c 10)
@@ -59,7 +60,7 @@ run() {
 
     printf "Starting Nginx...\n\n"
 
-    exec "/usr/sbin/nginx -g \"daemon off;\""
+    exec '/usr/sbin/nginx -g \"daemon off;\"'
 
     
 
