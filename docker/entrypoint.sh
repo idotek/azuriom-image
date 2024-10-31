@@ -51,24 +51,17 @@ install() {
     passwd_gen
 }
 
-
-
-
 run() {
     printf "\n\nStarting PHP 8.3 daemon...\n\n"
     php-fpm --daemonize
-
     printf "Starting Nginx...\n\n"
-
-    exec '/usr/sbin/nginx -g "daemon off;"'
-
-    
-
+    if [[ "$1" == -* ]]; then
+        set -- nginx -g daemon off; "$@"
+    fi
+    exec "$@"
 }
-
 if [ ! -f index.php ]; then
     install
 fi
-
 initialize
-run
+run "$@"
