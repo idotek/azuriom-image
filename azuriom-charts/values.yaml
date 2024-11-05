@@ -124,16 +124,16 @@ persistence:
   enabled: true
   azuriom_data:
     size: 10Gi
-    accesModes: ReadWriteOnce
-    storageClass: null
+    accessModes: ReadWriteOnce
+    storageClass: local-path
   azuriom_vhost:
     size: 512Mi
     accessModes: ReadWriteOnce
-    storageClass: null
+    storageClass: local-path
   azuriom_ssl:
     size: 512Mi
     accessModes: ReadWriteOnce
-    storageClass: null
+    storageClass: local-path
 
 WEB_DOMAIN: your-domain.local
 TLS_ENABLED: "False"

@@ -42,16 +42,13 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
             - name: azuriom-data
               mountPath: "/data"
             - name: azuriom-vhost
               mountPath: "/etc/nginx/sites-enabled"
             - name: azuriom-ssl
               mountPath: "/etc/nginx/ssl"
-          {{- end }}
           env:
             - name: WEB_DOMAIN
               value: {{ .Values.WEB_DOMAIN | quote }}
@@ -163,9 +160,7 @@ spec:
               value: {{ .Values.AWS_BUCKET | quote }}
             - name: AWS_USE_PATH_STYLE_ENDPOINT
               value: {{ .Values.AWS_USE_PATH_STYLE_ENDPOINT | quote }}
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
         - name: azuriom-data
           persistentVolumeClaim: 
             claimName: pvc-{{ .Release.Name }}-data
@@ -175,7 +170,6 @@ spec:
         - name: azuriom-ssl
           persistentVolumeClaim:
             claimName: pvc-{{ .Release.Name }}-ssl
-      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

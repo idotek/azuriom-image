@@ -4,6 +4,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pvc-{{ .Release.Name }}-{{ .name }}
+  labels:
+    {{- include "azuriom-charts.labels" . | nindent 4 }}
 spec:
   accessModes:
     - {{ .accessMode }}
