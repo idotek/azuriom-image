@@ -11,11 +11,11 @@ RUN apk update && \
         gnupg \
         git \
         gettext \
+        bash \
         nodejs \
         npm && \
     curl -sSL https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
         -o /usr/local/bin/install-php-extensions && \
-    echo "<checksum> /usr/local/bin/install-php-extensions" | sha256sum -c - && \
     chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions opcache pdo_mysql bcmath mbstring pdo tokenizer xml xmlwriter curl zip sqlite3 gd mysqli pgsql && \
     rm -rf /var/cache/apk/*
