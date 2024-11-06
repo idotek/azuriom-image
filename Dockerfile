@@ -10,10 +10,6 @@ RUN apt update && \
     gnupg \
     git \
     gettext 
-    # libxml2-dev \
-    # libcurl4-openssl-dev \
-    # libzip-dev \
-    # libonig-dev
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
@@ -44,9 +40,6 @@ RUN apt install nodejs -y
 WORKDIR /data/www
 COPY ./docker/.env.temp /tmp
 RUN mkdir /etc/nginx/ssl
-# RUN unzip /tmp/AzuriomInstaller -d /data/www
-# RUN chown -R www-data:www-data /data/www
-# RUN chmod -R 755 /data/www
 EXPOSE 80 443
 RUN apt clean
 CMD ["nginx", "-g", "daemon off;"]
