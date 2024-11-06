@@ -1,5 +1,5 @@
-{{- define "generatePvc" -}}
-
+{{- define "generatePvc" }}
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -13,4 +13,4 @@ spec:
   {{- if .storageClass }}
     storageClassName: {{.storageClass}}
   {{- end -}}
-{{- end -}}
+{{- end }}

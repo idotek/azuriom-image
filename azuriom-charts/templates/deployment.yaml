@@ -42,6 +42,8 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          
+          {{- if .Values.persistence.enabled }}
           volumeMounts:
             - name: azuriom-data
               mountPath: "/data"
@@ -49,6 +51,7 @@ spec:
               mountPath: "/etc/nginx/sites-enabled"
             - name: azuriom-ssl
               mountPath: "/etc/nginx/ssl"
+          {{- end }}
           env:
             - name: WEB_DOMAIN
               value: {{ .Values.WEB_DOMAIN | quote }}
@@ -58,6 +61,10 @@ spec:
               value: {{ .Values.TLS_CERTIFICATE_FULLCHAIN_NAME | quote }}
             - name: TLS_CERTIFIATE_PRIVKEY_NAME
               value: {{ .Values.TLS_CERTIFIATE_PRIVKEY_NAME | quote }}
+            - name: ADMIN_USERNAME
+              value: {{ .Values.ADMIN_USERNAME | quote }}
+            - name: ADMIN_EMAIL
+              value: {{ .Values.ADMIN_EMAIL | quote }}
             - name: APP_NAME
               value: {{ .Values.APP_NAME | quote }}
             - name: APP_ENV
@@ -160,6 +167,9 @@ spec:
               value: {{ .Values.AWS_BUCKET | quote }}
             - name: AWS_USE_PATH_STYLE_ENDPOINT
               value: {{ .Values.AWS_USE_PATH_STYLE_ENDPOINT | quote }}
+            - name: COMPOSER_ALLOW_SUPERUSER
+              value: "1"
+      {{- if .Values.persistence.enabled }}
       volumes:
         - name: azuriom-data
           persistentVolumeClaim: 
@@ -170,6 +180,7 @@ spec:
         - name: azuriom-ssl
           persistentVolumeClaim:
             claimName: pvc-{{ .Release.Name }}-ssl
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
