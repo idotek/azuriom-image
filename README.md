@@ -172,7 +172,7 @@ php artisan migrate
 
 | Tâche                      | Statut           | Description                                  |
 |----------------------------|------------------|----------------------------------------------|
-| 🔒 Sécurité dans le Docker & Helm  | ❌ Non commencé  | Mettre en place des bonnes pratiques de sécurité pour Docker. |
+| 🔒 Sécurité dans le Docker & Helm  | ⏳ En cours| Mettre en place des bonnes pratiques de sécurité pour Docker. |
 | 📦 Helm Charts              | ✅ Fini     | Création et configuration de Helm Charts.    |
 | 📚 Tutoriel                 | ❌ Non commencé  | Écrire un tutoriel détaillé.                  |
 | 💡 Exemple                  | ❌ Non commencé  | Créer un exemple pratique d'utilisation.     |
