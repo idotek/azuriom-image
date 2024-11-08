@@ -46,7 +46,7 @@ spec:
           {{- if .Values.persistence.enabled }}
           volumeMounts:
             - name: azuriom-data
-              mountPath: "/data"
+              mountPath: "/data/www"
             - name: azuriom-vhost
               mountPath: "/etc/nginx/sites-enabled"
             - name: azuriom-ssl
@@ -181,6 +181,20 @@ spec:
           persistentVolumeClaim:
             claimName: pvc-{{ .Release.Name }}-ssl
       {{- end }}
+      initContainers:
+        - name: init-permissions
+          image: busybox:latest
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["sh", "-c"]
+          args:
+            - |
+              echo "Setting permissions for /data/www";
+              chown -R 82:82 /data/www;
+              chmod -R 755 /data/www;
+          volumeMounts:
+            - name: azuriom-data
+              mountPath: "/data/www"
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
