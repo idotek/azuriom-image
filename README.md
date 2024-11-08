@@ -1,13 +1,21 @@
 
 # Azuriom Docker Deployment
 
-Ce projet permet de déployer le CMS [Azuriom](https://azuriom.com/) en utilisant Docker, Docker Compose et Helm pour une installation facile et modulable. La configuration inclut Nginx, PHP 8.3, MySQL, et d'autres dépendances pour supporter Azuriom.
+Ce projet permet de déployer le CMS [Azuriom](https://azuriom.com/) en utilisant Docker, ainsi qu'un charts Helm afin de le deployé dans un cluster Kubernetes.
+
+## Sommaire
+
+1. [Contenu du projet](#contenu-du-projet)
+2. [Prérequis](#prérequis)
+3. [Installation](#installation)
+   - [Utilisation de Docker](#utilisation-de-docker)
+   - [Dans un cluster Kubernetes avec Helm](#dans-un-cluster-kubernetes-avec-helm)
 
 ## Contenu du projet
 
 - **Dockerfile** : Configure l'image Docker pour Azuriom avec PHP, Nginx et les extensions nécessaires.
 - **docker-compose.yml** : Définit les services, réseaux et volumes nécessaires pour exécuter Azuriom et MySQL.
-- **chart Helm** (optionnel) : Facilite le déploiement sur un cluster Kubernetes.
+- **chart Helm** : Facilite le déploiement sur un cluster Kubernetes.
 - **.env.temp** : Modèle de fichier d'environnement pour définir les variables d'environnement.
 - **entrypoint.sh** : Script d'initialisation qui configure le CMS et exécute les migrations.
 
@@ -19,18 +27,99 @@ Ce projet permet de déployer le CMS [Azuriom](https://azuriom.com/) en utilisan
 
 ## Installation
 
-### 1. Clonez le dépôt
+### Utilisation de Docker.
+
+#### 1. Clonez le dépôt (Optionnel)
 
 ```bash
 git clone https://github.com/idotek/azuriom-image.git
 cd azuriom-image
 ```
 
+Ou clonez simplement le fichier docker-compose.yaml.
 
-### 2. Configurez les variables d'environnement
+
+#### 2. Configurez les variables d'environnement
 
 Modifier les variables d'environnement dans le fichier docker-compose à votre guise.
-Variables d'environnement supportées:
+Pour voir les variables [supportées, référez-vous à cette partie](#variables)
+
+
+#### 3. Démarrez vos conteneurs
+
+```bash
+docker-compose up -d
+```
+
+Le service Azuriom sera accessible sur `http://localhost:80`, sauf configuration personnalisée.
+
+#### 4. Récuperation du mot de passe admin
+
+Azuriom à besoin de quelques minutes avant d'etre ready, vous pouvez suivre l'evolution de l'installation avec la commande:
+
+```bash
+docker compose logs -f 
+```
+
+Pour recuperer le mot de passe admin:
+
+```bash
+docker compose logs |grep "Password:"
+```
+
+### Dans un cluster Kubernetes avec Helm.
+
+#### 1. Clonez le repos (Optionnel)
+
+```bash
+git clone https://github.com/idotek/azuriom-image.git
+cd azuriom-image
+```
+
+Ou clonez simplement le dossier azuriom-charts. (Un repository Helm arrivera bientot)
+
+#### 2. Configurez les variables d'environnement
+
+Modifier les variables d'environnement dans le fichier values.yaml à votre guise.
+Pour voir les variables [supportées, référez-vous à cette partie](#Variables)
+
+#### 3. Lancez vos pods.
+
+Azuriom necessite une connexion à une base de donnée, preferons mariadb dans notre cas.
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm install my-mariadb bitnami/mariadb \
+  --set auth.database=azuriom \
+  --set auth.username=azuriom \
+  --set auth.password=Passw0rd
+```
+
+Le pods à besoin de quelques minutes avant d'etre lancée.
+
+#### 4. Recuperation du mot de passe admin.
+
+```bash
+kubectl get pods ### Pour recuperer le nom de votre pods Azuriom
+kubectl logs <nom_de_votre_pods> |grep Password
+```
+
+Une fois notre pods mariadb en state running, nous pouvons lancer notre pods azurioms.
+
+```bash
+helm install my-azuriom azuriom-charts/
+```
+
+## Structure des fichiers
+
+### Docker
+- `Dockerfile` : Installe PHP 8.3, Nginx, et les extensions PHP nécessaires pour Azuriom, ainsi que Composer et Node.js pour la gestion des dépendances.
+- `docker-compose.yml` : Contient la configuration Docker Compose pour Azuriom et MySQL.
+- `.env.temp` : Contient les variables d'environnement essentielles au fonctionnement d'Azuriom.
+- `entrypoint.sh` : Effectue la configuration initiale d'Azuriom, installe les dépendances, et exécute les migrations de base de données.
+
+
+## Variables
 
 | Variable                        | Description                                                                                         | Optionnel   |
 |---------------------------------|-----------------------------------------------------------------------------------------------------|-------------|
@@ -94,42 +183,12 @@ Variables d'environnement supportées:
 
 
 
-### 3. Construisez et démarrez les conteneurs
-
-```bash
-docker-compose up -d
-```
-
-Le service Azuriom sera accessible sur `http://localhost:80`, sauf configuration personnalisée.
-
-### 4. Récuperation du mot de passe admin
-
-Azuriom à besoin de quelques minutes avant d'etre ready, vous pouvez suivre l'evolution de l'installation avec la commande:
-
-```bash
-docker compose logs -f 
-```
-
-Pour recuperer le mot de passe admin:
-
-```bash
-docker compose logs |grep "Password:"
-```
-
-## Structure des fichiers
-
-
-
-- `Dockerfile` : Installe PHP 8.3, Nginx, et les extensions PHP nécessaires pour Azuriom, ainsi que Composer et Node.js pour la gestion des dépendances.
-- `docker-compose.yml` : Contient la configuration Docker Compose pour Azuriom et MySQL.
-- `.env.temp` : Contient les variables d'environnement essentielles au fonctionnement d'Azuriom.
-- `entrypoint.sh` : Effectue la configuration initiale d'Azuriom, installe les dépendances, et exécute les migrations de base de données.
-
 ## Utilisation
 
 ### Accéder à Azuriom
 
 Une fois le conteneur démarré, vous pouvez accéder à Azuriom à l'adresse définie dans `WEB_DOMAIN` (par défaut, `http://localhost`).
+Dans le cadre d'un cluster Kubernetes, le charts est preconfigurée pour utiliser votre Ingress. Votre valeur `host` dans votre values.yaml doit etre égale à votre `WEB_DOMAIN`
 
 ### Commandes Docker Compose courantes
 
@@ -147,10 +206,17 @@ Une fois le conteneur démarré, vous pouvez accéder à Azuriom à l'adresse d�
   ```bash
   docker-compose logs
   ```
+- Voir les logs de votre pods:
+  ```bash
+  kubectl logs <votrepods>
+  ```
 
 ## Configuration TLS
 
-Pour activer le TLS, mettez à jour les variables `TLS_ENABLED`, `TLS_CERTIFICATE_FULLCHAIN_NAME`, et `TLS_CERTIFIATE_PRIVKEY_NAME` dans `docker-compose.yml`. Le script `entrypoint.sh` configurera automatiquement les certificats pour Nginx.
+
+Pour activer le TLS, mettez à jour les variables `TLS_ENABLED`, `TLS_CERTIFICATE_FULLCHAIN_NAME`, et `TLS_CERTIFIATE_PRIVKEY_NAME` dans `docker-compose.yml` ou votre `values.yaml`. Vous devez aussi upload vos certificats dans vos volumes. Le script `entrypoint.sh` configurera automatiquement les certificats pour Nginx.
+
+
 
 ## Personnalisation
 
@@ -172,9 +238,8 @@ php artisan migrate
 
 | Tâche                      | Statut           | Description                                  |
 |----------------------------|------------------|----------------------------------------------|
-| 🔒 Sécurité dans le Docker & Helm  | ⏳ En cours| Mettre en place des bonnes pratiques de sécurité pour Docker. |
+| 🔒 Sécurité dans le Docker & Helm  | ✅ Fini| Mettre en place des bonnes pratiques de sécurité pour Docker et Helm. |
 | 📦 Helm Charts              | ✅ Fini     | Création et configuration de Helm Charts.    |
-| 📚 Tutoriel                 | ❌ Non commencé  | Écrire un tutoriel détaillé.                  |
 | 💡 Exemple                  | ❌ Non commencé  | Créer un exemple pratique d'utilisation.     |
 
 ## Aide
