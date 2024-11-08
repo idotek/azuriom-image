@@ -10,6 +10,10 @@ Ce projet permet de déployer le CMS [Azuriom](https://azuriom.com/) en utilisan
 3. [Installation](#installation)
    - [Utilisation de Docker](#utilisation-de-docker)
    - [Dans un cluster Kubernetes avec Helm](#dans-un-cluster-kubernetes-avec-helm)
+4. [Structures des fichiers](#structure-des-fichiers)
+5. [Variables](#variables)
+6. [Utilisation](#utilisation)
+7. [Configuration TLS](#configuration-tls)
 
 ## Contenu du projet
 
@@ -112,7 +116,6 @@ helm install my-azuriom azuriom-charts/
 
 ## Structure des fichiers
 
-### Docker
 - `Dockerfile` : Installe PHP 8.3, Nginx, et les extensions PHP nécessaires pour Azuriom, ainsi que Composer et Node.js pour la gestion des dépendances.
 - `docker-compose.yml` : Contient la configuration Docker Compose pour Azuriom et MySQL.
 - `.env.temp` : Contient les variables d'environnement essentielles au fonctionnement d'Azuriom.
@@ -241,6 +244,7 @@ php artisan migrate
 | 🔒 Sécurité dans le Docker & Helm  | ✅ Fini| Mettre en place des bonnes pratiques de sécurité pour Docker et Helm. |
 | 📦 Helm Charts              | ✅ Fini     | Création et configuration de Helm Charts.    |
 | 💡 Exemple                  | ❌ Non commencé  | Créer un exemple pratique d'utilisation.     |
+
 
 ## Aide
 
