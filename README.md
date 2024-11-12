@@ -244,8 +244,9 @@ php artisan migrate
 | 🔒 Sécurité dans le Docker & Helm  | ✅ Fini| Mettre en place des bonnes pratiques de sécurité pour Docker et Helm. |
 | 📦 Helm Charts              | ✅ Fini     | Création et configuration de Helm Charts.    |
 | 💡 Exemple                  | ❌ Non commencé  | Créer un exemple pratique d'utilisation.     |
-| 🔑 Gestion des secrets dans Kube & Configmap | ❌ Non commencé | Gerer les variables sensibles dans un Secret Kubernetes & variables non sensible dans une ConfigMap|
-
+| 🔑 Gestion des secrets dans Kube & Configmap | ❌ Non commencé | Gerer les variables sensibles dans un Secret Kubernetes & variables non sensible dans une ConfigMap |
+| 🔄 Autoscaling              | ❌ Non commencé | Gerer l'autoscaling dans Kube |
+| 
 
 ## Aide
 
