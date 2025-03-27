@@ -13,6 +13,7 @@ RUN apk update && \
         gettext \
         bash \
         nodejs \
+        sendmail \
         npm && \
     curl -sSL https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions \
         -o /usr/local/bin/install-php-extensions && \
